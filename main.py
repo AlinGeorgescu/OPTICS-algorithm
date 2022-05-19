@@ -35,7 +35,7 @@ def main() -> None:
     with open(DATASETS[dataset], 'r') as csv_file:
         tmp_data = pd.read_csv(csv_file, delimiter=',', usecols=header, encoding='utf-8')
 
-    data = np.array(tmp_data, np.double)
+    data = np.array(tmp_data[header], np.double)
     del tmp_data
 
     if dataset == 1:
