@@ -29,7 +29,7 @@ def main() -> None:
         print('Please choose a valid dataset!')
         sys.exit()
 
-    header = ['Latitude', 'Longitude']
+    header = ['Longitude', 'Latitude']
 
     # Read a dataset
     with open(DATASETS[dataset], 'r') as csv_file:
@@ -61,13 +61,13 @@ def main() -> None:
     unique_labels_count = unique_labels_with_outliers - 1 if -1 in labels else unique_labels_with_outliers
     negative_labels_count = len(data[clust.labels_ == -1])
 
-    print('The number of clusters in the dataset is: ' + str(unique_labels_count))
-    print('The number of outliers in the dataset is: ' + str(negative_labels_count))
+    print('The number of clusters in the dataset for OPTICS is: ' + str(unique_labels_count))
+    print('The number of outliers in the dataset for OPTICS is: ' + str(negative_labels_count))
 
     if unique_labels_count == 0:
         return
 
-    for label in range(0, unique_labels_count):
+    for label in range(unique_labels_count):
         cluster_points = data[clust.labels_ == label]
         print(f'Cluster {label} has {len(cluster_points)} samples.')
 
@@ -79,7 +79,7 @@ def main() -> None:
     colors = ['g.', 'r.', 'b.', 'y.', 'c.', 'm.']
 
     # Plot the clusters
-    for cluster, color in zip(range(0, unique_labels_count), colors):
+    for cluster, color in zip(range(unique_labels_count), colors):
         cluster_points = data[clust.labels_ == cluster]
         ax1.plot(cluster_points[:, 0], cluster_points[:, 1], color, alpha=0.3)
     ax1.plot(data[clust.labels_ == -1, 0], data[clust.labels_ == -1, 1], 'k+', alpha=0.1)
@@ -89,7 +89,7 @@ def main() -> None:
     space = np.arange(len(data))
     reachability = clust.reachability_[clust.ordering_]
 
-    for cluster, color in zip(range(0, unique_labels_count), colors):
+    for cluster, color in zip(range(unique_labels_count), colors):
         Xk = space[labels == cluster]
         Rk = reachability[labels == cluster]
         ax2.plot(Xk, Rk, color, alpha=0.3)
@@ -102,11 +102,11 @@ def main() -> None:
 
     # Evaluation of the results
     calinski_harabasz_score = metrics.calinski_harabasz_score(data, clust.labels_)
-    print('The Calinski-Harabasz score is: ' + str(calinski_harabasz_score))
+    print('The Calinski-Harabasz score for OPTICS is: ' + str(calinski_harabasz_score))
     davies_bouldin_score = metrics.davies_bouldin_score(data, clust.labels_)
-    print('The Davies–Bouldin score is: ' + str(davies_bouldin_score))
+    print('The Davies–Bouldin score for OPTICS is: ' + str(davies_bouldin_score))
     silhouette_score = metrics.silhouette_score(data, clust.labels_, metric='euclidean')
-    print('The Silhouette score is: ' + str(silhouette_score))
+    print('The Silhouette score for OPTICS is: ' + str(silhouette_score))
 
     # Compare with DBSCAN
 
@@ -120,13 +120,13 @@ def main() -> None:
     unique_labels_count = unique_labels_with_outliers - 1 if -1 in labels else unique_labels_with_outliers
     negative_labels_count = len(data[clust.labels_ == -1])
 
-    print('The number of clusters in the dataset is: ' + str(unique_labels_count))
-    print('The number of outliers in the dataset is: ' + str(negative_labels_count))
+    print('The number of clusters in the dataset for DBSCAN is: ' + str(unique_labels_count))
+    print('The number of outliers in the dataset for DBSCAN is: ' + str(negative_labels_count))
 
     if unique_labels_count == 0:
         return
 
-    for label in range(0, unique_labels_count):
+    for label in range(unique_labels_count):
         cluster_points = data[clust.labels_ == label]
         print(f'Cluster {label} has {len(cluster_points)} samples.')
 
@@ -137,7 +137,7 @@ def main() -> None:
     colors = ['g.', 'r.', 'b.', 'y.', 'c.', 'm.']
 
     # Plot the clusters
-    for cluster, color in zip(range(0, unique_labels_count), colors):
+    for cluster, color in zip(range(unique_labels_count), colors):
         cluster_points = data[clust.labels_ == cluster]
         ax1.plot(cluster_points[:, 0], cluster_points[:, 1], color, alpha=0.3)
     ax1.plot(data[clust.labels_ == -1, 0], data[clust.labels_ == -1, 1], 'k+', alpha=0.1)
@@ -148,11 +148,11 @@ def main() -> None:
 
     # Evaluation of the results
     calinski_harabasz_score = metrics.calinski_harabasz_score(data, clust.labels_)
-    print('The Calinski-Harabasz score is: ' + str(calinski_harabasz_score))
+    print('The Calinski-Harabasz score for DBSCAN is: ' + str(calinski_harabasz_score))
     davies_bouldin_score = metrics.davies_bouldin_score(data, clust.labels_)
-    print('The Davies–Bouldin score is: ' + str(davies_bouldin_score))
+    print('The Davies–Bouldin score for DBSCAN is: ' + str(davies_bouldin_score))
     silhouette_score = metrics.silhouette_score(data, clust.labels_, metric='euclidean')
-    print('The Silhouette score is: ' + str(silhouette_score))
+    print('The Silhouette score for DBSCAN is: ' + str(silhouette_score))
 
 if __name__ == '__main__':
     main()
