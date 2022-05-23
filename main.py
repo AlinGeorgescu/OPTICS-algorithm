@@ -83,6 +83,8 @@ def main() -> None:
         cluster_points = data[clust.labels_ == cluster]
         ax1.plot(cluster_points[:, 0], cluster_points[:, 1], color, alpha=0.3)
     ax1.plot(data[clust.labels_ == -1, 0], data[clust.labels_ == -1, 1], 'k+', alpha=0.1)
+    ax1.set_xlabel('Longitude')
+    ax1.set_ylabel('Latitude')
     ax1.set_title('OPTICS Clustering')
 
     # Plot the reachability graphic
@@ -94,7 +96,8 @@ def main() -> None:
         Rk = reachability[labels == cluster]
         ax2.plot(Xk, Rk, color, alpha=0.3)
     ax2.plot(space[labels == -1], reachability[labels == -1], 'k.', alpha=0.3)
-    ax2.set_ylabel('Reachability (epsilon)')
+    ax2.set_xlabel('Points ordering')
+    ax2.set_ylabel('Reachability distance')
     ax2.set_title('Reachability Plot')
 
     plt.tight_layout()
@@ -141,6 +144,8 @@ def main() -> None:
         cluster_points = data[clust.labels_ == cluster]
         ax1.plot(cluster_points[:, 0], cluster_points[:, 1], color, alpha=0.3)
     ax1.plot(data[clust.labels_ == -1, 0], data[clust.labels_ == -1, 1], 'k+', alpha=0.1)
+    ax1.set_xlabel('Longitude')
+    ax1.set_ylabel('Latitude')
     ax1.set_title('DBSCAN Clustering')
 
     plt.tight_layout()
